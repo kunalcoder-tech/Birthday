@@ -1,1 +1,283 @@
-# Birthday.-HTML
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday Vaishnavi 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ff6ec4;
+    background-image: url("https://files.catbox.moe/iyq1bz.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: Arial;
+    text-align: center;
+    color: black;
+    overflow-x: hidden;
+}
+
+/* Falling Hearts */
+.heart {
+    position: fixed;
+    top: -10px;
+    color: #ffdde1;
+    font-size: 20px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+.container {
+    padding: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 35px;
+}
+
+#message {
+    font-size: 20px;
+    margin-top: 20px;
+    min-height: 60px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #ff4e8a;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: #ff4e8a;
+    color: white;
+}
+
+.gallery {
+    display: none;
+    margin-top: 30px;
+
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}
+
+
+/* slider style add karo niche */
+
+.gallery {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.slide {
+  display: none;
+  width: 100%; 
+  height: 100vh;
+  object-fit: contain;
+  border-radius: 0;
+}
+    .firework{
+position:fixed;
+font-size:30px;
+animation:boom 1s ease-out;
+}
+
+@keyframes boom{
+0%{transform:scale(0);}
+100%{transform:scale(3); opacity:0;}
+}
+
+/* Wish Box */
+.wish-box {
+    margin-top: 50px;
+}
+
+textarea {
+    width: 80%;
+    max-width: 400px;
+    height: 100px;
+    border-radius: 15px;
+    border: none;
+    padding: 10px;
+}
+
+#wishDisplay {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+/* Confetti */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+
+<h1>🎂🎉 HAPPY BIRTHDAY VAISHNAVI 🥳💖</h1>
+
+<div id="message"></div>
+
+<button onclick="showSurprise()">Click For Surprise 🎁</button>
+
+<div class="gallery" id="gallery">
+    <img class="slide" src="https://i.ibb.co/MxpMDLRG/IMG-20260307-164824.jpg">
+    <img class="slide" src="https://i.ibb.co/CjgnmdY/Photo6.jpg">
+    <img class="slide" src="https://i.ibb.co/7dhK8pyC/Photo4.jpg">
+    <img class="slide" src="https://i.ibb.co/1tWC1rKY/Photo1.jpg">
+    <img class="slide" src="https://i.ibb.co/0SKFSQw/Photo9.jpg">
+    <img class="slide" src="https://i.ibb.co/6cgksYqg/IMG-20260208-220703.jpg">
+    <img class="slide" src="https://i.ibb.co/Q7wb6jHK/IMG-20260307-164841.jpg">
+    <img class="slide" src="https://i.ibb.co/3y0LJbvT/IMG-20260208-220637.jpg">
+    <img class="slide" src="https://i.ibb.co/p6MmyVzB/Photo3.jpg">
+    <img class="slide" src="https://i.ibb.co/6dNbVxF/Photo7.jpg">
+    <img class="slide" src="https://i.ibb.co/QFj7WmzF/Photo11.jpg">
+    <img class="slide" src="https://i.ibb.co/Xfjw0k3Z/Photo10.jpg">
+    </div>
+
+<div class="wish-box">
+    <h2>💌 Leave a Birthday Wish</h2>
+    <textarea id="wishInput" placeholder="Write your sweet message here..."></textarea><br>
+    <button onclick="submitWish()">Send Wish 💖</button>
+    <div id="wishDisplay"></div>
+</div>
+    <div id="cake" style="display:none; font-size:80px; margin-top:20px;">
+        🎂
+</div>
+
+</div>
+
+<audio id="music" loop preload="auto">
+    <source src="https://files.catbox.moe/65qz81.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Typing Effect
+var text = "the world became a little more beautiful the day you were born...💕 if smiles were stars, your smile would be the whole galaxy.🫵 may your birthday be as beautiful and special as your smile, beautiful girl...💃✨ ✨💖";
+var i = 0;
+
+function typing() {
+    if (i < text.length) {
+        document.getElementById("message").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 50);
+    }
+}
+typing();
+
+// Falling Hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❣️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 5000);
+}
+setInterval(createHeart, 300);
+
+// Confetti
+function launchConfetti() {
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    for (let i = 0; i < 150; i++) {
+        ctx.fillStyle = "hsl(" + Math.random()*360 + ",100%,50%)";
+        ctx.fillRect(Math.random()*canvas.width,
+                     Math.random()*canvas.height,
+                     5, 5);
+    }
+
+    setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 1000);
+}
+
+// Surprise Button
+function showSurprise() {
+    var audio = document.getElementById("music");
+
+    audio.play().catch(function(){
+        console.log("Audio play blocked");
+    });
+
+    document.getElementById("gallery").style.display = "block";
+    launchConfetti();
+    showSlides();
+    document.getElementById("cake").style.display = "block"; 
+    alert("Once again... Happy Birthday Beautiful Girl Tiwari ji... Party Chahiye 🎉💖✨🍻🎂 orrrrr sunnnn apne bande ko maatt bhejiyo mujhe block nahi hona 😂");
+}
+    //fire works
+    function firework(){
+let fw = document.createElement("div");
+fw.className="firework";
+fw.innerHTML="🎇";
+fw.style.left=Math.random()*100+"vw";
+fw.style.top=Math.random()*100+"vh";
+document.body.appendChild(fw);
+
+setTimeout(()=>{fw.remove()},1000);
+}
+
+setInterval(firework,800);
+
+// Wish
+function submitWish() {
+    var wish = document.getElementById("wishInput").value;
+    if(wish.trim() !== "") {
+        document.getElementById("wishDisplay").innerHTML =
+        "💖 She wrote:<br><br>\"" + wish + "\"";
+        document.getElementById("wishInput").value = "";
+    } else {
+        alert("Write something sweet first 😊");
+    }
+    }
+</script>
+
+
+    <script>
+let slideIndex = 0;
+
+function showSlides() {
+  let slides = document.getElementsByClassName("slide");
+
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+
+  slides[slideIndex-1].style.display = "block";
+
+  setTimeout(showSlides, 2000);
+}
+    </script>
+</body>
+</html>
